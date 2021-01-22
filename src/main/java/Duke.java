@@ -7,7 +7,6 @@ public class Duke {
         Task[] allTasks = new Task[100];
         int numTasks = 0;
         int taskNum = 0;
-        int markNum;
 
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -50,14 +49,14 @@ public class Duke {
                     }
                     System.out.println("Please enter the number of the task you have completed.");
                     System.out.println("Enter '0' if nothing else.");
-                    markNum = input.nextInt();
+                    taskNum = input.nextInt();
                     do{
-                        markNum = markNum - 1;
-                        allTasks[markNum].setDone();
-                        System.out.println("You've completed " + allTasks[markNum].getTask() + "!");
-                        markNum = input.nextInt();
+                        taskNum = taskNum - 1;
+                        allTasks[taskNum].setDone();
+                        System.out.println("You've completed " + allTasks[taskNum].getTask() + "!");
+                        taskNum = input.nextInt();
 
-                    } while (markNum != 0);
+                    } while (taskNum != 0);
                     System.out.println("Your current tasks: ");
                     for(int i=0; i < allTasks.length; i++) {
                         if (allTasks[i] != null) {
