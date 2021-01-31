@@ -2,12 +2,14 @@ public class Task {
 
     protected boolean done;
     protected String task;
+    protected String taskType;
     protected int id;
     protected static int numberOfTasks = 0;
 
-    public Task(String action) {
+    public Task(String task) {
         this.done = false;
-        this.task = action;
+        this.
+
 
         numberOfTasks++;
         id = numberOfTasks;
@@ -15,6 +17,17 @@ public class Task {
 
     public int getID() {
         return id;
+    }
+
+    public void getTaskType(){
+        switch (this.taskType){
+            case "todo":
+                return "[T]";
+            case "deadline":
+                return "[D]";
+            case "event":
+                return "[E]";
+        }
     }
 
     public String getTask() {
