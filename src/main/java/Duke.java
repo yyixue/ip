@@ -26,18 +26,14 @@ public class Duke {
 
         do{
             String actionArr[] = action.split(" ", 2);
-            switch(arr[0]){
+            switch(actionArr[0]){
 
                 case "done":
-                    // stuff
-
                     taskNum = Integer.parseInt(actionArr[1]);
 
                     taskNum = taskNum - 1;
                     allTasks[taskNum].setDone();
                     System.out.println("You've completed " + allTasks[taskNum].getTask() + "!");
-                    taskNum = input.nextInt();
-
                     System.out.println("Your current tasks: ");
                     for(int i=0; i < allTasks.length; i++) {
                         if (allTasks[i] != null) {
@@ -52,18 +48,44 @@ public class Duke {
                     for(int i=0; i < allTasks.length; i++) {
                         if (allTasks[i] != null) {
                             taskNum = i + 1;
-                            System.out.println(taskNum + ". " + allTasks[i].getDone() + " " + allTasks[i].getTask());
+                            System.out.println(taskNum + ". " + allTasks[i].toString());
                         }
                     }
                     System.out.println("----------------------------------------------------");
                     break;
-                default:
-
-                    Task t = new Task(actionArr[1]);
+                case "todo":
+                    Todo t = new Todo(actionArr[1]);
                     allTasks[numTasks] = t;
-                    System.out.println("Added: " + t.getTask());
-                    numTasks ++;
                     System.out.println("----------------------------------------------------");
+                    System.out.println("Got it. I've added this task:");
+                    t.toString();
+                    numTasks ++;
+                    System.out.println("Now you have "+ String.valueOf(numTasks) +" tasks in the list.");
+                    System.out.println("----------------------------------------------------");
+                    break;
+                case "deadline":
+                    String[] deadlineParts = actionArr[1].split("/by");
+                    Deadline d = new Deadline(deadlineParts[0], deadlineParts[1]);
+                    allTasks[numTasks] = d;
+                    System.out.println("----------------------------------------------------");
+                    System.out.println("Got it. I've added this task:");
+                    d.toString();
+                    numTasks ++;
+                    System.out.println("Now you have "+ String.valueOf(numTasks) +" tasks in the list.");
+                    System.out.println("----------------------------------------------------");
+                    break;
+                case "event":
+                    String[] eventParts = actionArr[1].split("/at");
+                    Event e = new Event(eventParts[0], eventParts[1]);
+                    allTasks[numTasks] = e;
+                    System.out.println("----------------------------------------------------");
+                    System.out.println("Got it. I've added this task:");
+                    e.toString();
+                    numTasks ++;
+                    System.out.println("Now you have "+ String.valueOf(numTasks) +" tasks in the list.");
+                    System.out.println("----------------------------------------------------");
+                    break;
+                default:
                     break;
             }
 
