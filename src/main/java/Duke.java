@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class Duke {
     public static void main(String[] args) {
 
+        String action = null;
         Scanner input = new Scanner(System.in);
         Task[] allTasks = new Task[100];
         int numTasks = 0;
@@ -21,10 +22,9 @@ public class Duke {
         System.out.println("----------------------------------------------------");
 
         // obtain string input
-        String action = input.nextLine();
+        if(!input.hasNext() || (action = input.nextLine()).isEmpty()) System.exit(0);
 
-
-        do{
+        while (!action.equalsIgnoreCase("Bye")){
             String actionArr[] = action.split(" ", 2);
             switch(actionArr[0]){
 
@@ -87,10 +87,10 @@ public class Duke {
                     break;
                 default:
                     break;
-            }
 
-            action = input.nextLine();
-        } while (!action.equalsIgnoreCase("Bye"));
+            }
+            if(!input.hasNext() || (action = input.nextLine()).isEmpty()) System.exit(0);
+        }
 
         System.out.println("----------------------------------------------------");
         System.out.println("Bye! Hope you have a wonderful day.");
