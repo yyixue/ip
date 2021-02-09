@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import task.*;
 
 class DukeException extends Exception {
     public DukeException(String errorMessage) {
@@ -7,7 +8,7 @@ class DukeException extends Exception {
 }
 
 public class Duke {
-    public static void main(String[] args) throws DukeException{
+    public static void main(String[] args){
 
         String action = null;
         Scanner input = new Scanner(System.in);
@@ -39,21 +40,14 @@ public class Duke {
                         if (actionArr.length == 1) {
                             throw new DukeException("OOPS!!! Please indicate the task you want to mark as done.");
                         }
-                    } catch (DukeException b){
-                        System.out.println(b);
+                    } catch (DukeException a){
+                        System.out.println(a);
                         break;
                     }
                     taskNum = Integer.parseInt(actionArr[1]);
                     taskNum = taskNum - 1;
                     allTasks[taskNum].setDone();
                     System.out.println("You've completed " + allTasks[taskNum].getTask() + "!");
-                    System.out.println("Your current tasks: ");
-                    for(int i=0; i < allTasks.length; i++) {
-                        if (allTasks[i] != null) {
-                            taskNum = i + 1;
-                            System.out.println(taskNum + ". " + allTasks[i].getDone() + " " + allTasks[i].getTask());
-                        }
-                    }
                     System.out.println("----------------------------------------------------");
                     break;
                 case "list":
@@ -71,8 +65,8 @@ public class Duke {
                         if (actionArr.length == 1) {
                             throw new DukeException("OOPS!!! The description of a todo cannot be empty.");
                         }
-                    } catch (DukeException t){
-                        System.out.println(t);
+                    } catch (DukeException b){
+                        System.out.println(b);
                         break;
                     }
                     Todo t = new Todo(actionArr[1]);
@@ -85,6 +79,14 @@ public class Duke {
                     System.out.println("----------------------------------------------------");
                     break;
                 case "deadline":
+                    try {
+                        if (actionArr.length == 1) {
+                            throw new DukeException("OOPS!!! Deadline description cannot be empty.");
+                        }
+                    } catch (DukeException c){
+                        System.out.println(c);
+                        break;
+                    }
                     String[] deadlineParts = actionArr[1].split("/by");
                     try {
                         if (deadlineParts.length == 1) {
@@ -104,13 +106,21 @@ public class Duke {
                     System.out.println("----------------------------------------------------");
                     break;
                 case "event":
+                    try {
+                        if (actionArr.length == 1) {
+                            throw new DukeException("OOPS!!! Event description cannot be empty.");
+                        }
+                    } catch (DukeException e){
+                        System.out.println(e);
+                        break;
+                    }
                     String[] eventParts = actionArr[1].split("/at");
                     try {
                         if (eventParts.length == 1) {
                             throw new DukeException("OOPS!! You did not include an event date using /at. :(");
                         }
-                    } catch (DukeException e){
-                        System.out.println(e);
+                    } catch (DukeException f){
+                        System.out.println(f);
                         break;
                     }
                     Event e = new Event(eventParts[0], eventParts[1]);
