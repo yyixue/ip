@@ -1,7 +1,13 @@
 import java.util.Scanner;
 
+class DukeException extends Exception {
+    public DukeException(String errorMessage) {
+        super(errorMessage);
+    }
+}
+
 public class Duke {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DukeException{
 
         String action = null;
         Scanner input = new Scanner(System.in);
@@ -29,10 +35,12 @@ public class Duke {
             switch(actionArr[0].toLowerCase()){
 
                 case "done":
-                    if (actionArr.length==1) {
-                        System.out.println("----------------------------------------------------");
-                        System.out.println("OOPS!!! Please indicate the task you want to mark as done. :(");
-                        System.out.println("----------------------------------------------------");
+                    try {
+                        if (actionArr.length == 1) {
+                            throw new DukeException("OOPS!!! Please indicate the task you want to mark as done.");
+                        }
+                    } catch (DukeException b){
+                        System.out.println(b);
                         break;
                     }
                     taskNum = Integer.parseInt(actionArr[1]);
@@ -59,10 +67,12 @@ public class Duke {
                     System.out.println("----------------------------------------------------");
                     break;
                 case "todo":
-                    if (actionArr.length==1) {
-                        System.out.println("----------------------------------------------------");
-                        System.out.println("OOPS!!! The description of a todo cannot be empty. :(");
-                        System.out.println("----------------------------------------------------");
+                    try {
+                        if (actionArr.length == 1) {
+                            throw new DukeException("OOPS!!! The description of a todo cannot be empty.");
+                        }
+                    } catch (DukeException t){
+                        System.out.println(t);
                         break;
                     }
                     Todo t = new Todo(actionArr[1]);
@@ -70,16 +80,18 @@ public class Duke {
                     System.out.println("----------------------------------------------------");
                     System.out.println("Got it. I've added this task:");
                     t.toString();
-                    numTasks ++;
-                    System.out.println("Now you have "+ String.valueOf(numTasks) +" tasks in the list.");
+                    numTasks++;
+                    System.out.println("Now you have " + String.valueOf(numTasks) + " tasks in the list.");
                     System.out.println("----------------------------------------------------");
                     break;
                 case "deadline":
                     String[] deadlineParts = actionArr[1].split("/by");
-                    if (deadlineParts.length==1) {
-                        System.out.println("----------------------------------------------------");
-                        System.out.println("OOPS!! You did not include a deadline using /by. :(");
-                        System.out.println("----------------------------------------------------");
+                    try {
+                        if (deadlineParts.length == 1) {
+                            throw new DukeException("OOPS!! You did not include a deadline using /by. :(");
+                        }
+                    } catch (DukeException d){
+                        System.out.println(d);
                         break;
                     }
                     Deadline d = new Deadline(deadlineParts[0], deadlineParts[1]);
@@ -93,10 +105,12 @@ public class Duke {
                     break;
                 case "event":
                     String[] eventParts = actionArr[1].split("/at");
-                    if (eventParts.length==1){
-                        System.out.println("----------------------------------------------------");
-                        System.out.println("OOPS!! You did not include an event date using /at. :(");
-                        System.out.println("----------------------------------------------------");
+                    try {
+                        if (eventParts.length == 1) {
+                            throw new DukeException("OOPS!! You did not include an event date using /at. :(");
+                        }
+                    } catch (DukeException e){
+                        System.out.println(e);
                         break;
                     }
                     Event e = new Event(eventParts[0], eventParts[1]);
