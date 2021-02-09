@@ -26,11 +26,16 @@ public class Duke {
 
         while (!action.equalsIgnoreCase("Bye")){
             String actionArr[] = action.split(" ", 2);
-            switch(actionArr[0]){
+            switch(actionArr[0].toLowerCase()){
 
                 case "done":
+                    if (actionArr.length==1) {
+                        System.out.println("----------------------------------------------------");
+                        System.out.println("OOPS!!! Please indicate the task you want to mark as done. :(");
+                        System.out.println("----------------------------------------------------");
+                        break;
+                    }
                     taskNum = Integer.parseInt(actionArr[1]);
-
                     taskNum = taskNum - 1;
                     allTasks[taskNum].setDone();
                     System.out.println("You've completed " + allTasks[taskNum].getTask() + "!");
@@ -54,6 +59,12 @@ public class Duke {
                     System.out.println("----------------------------------------------------");
                     break;
                 case "todo":
+                    if (actionArr.length==1) {
+                        System.out.println("----------------------------------------------------");
+                        System.out.println("OOPS!!! The description of a todo cannot be empty. :(");
+                        System.out.println("----------------------------------------------------");
+                        break;
+                    }
                     Todo t = new Todo(actionArr[1]);
                     allTasks[numTasks] = t;
                     System.out.println("----------------------------------------------------");
@@ -65,6 +76,12 @@ public class Duke {
                     break;
                 case "deadline":
                     String[] deadlineParts = actionArr[1].split("/by");
+                    if (deadlineParts.length==1) {
+                        System.out.println("----------------------------------------------------");
+                        System.out.println("OOPS!! You did not include a deadline using /by. :(");
+                        System.out.println("----------------------------------------------------");
+                        break;
+                    }
                     Deadline d = new Deadline(deadlineParts[0], deadlineParts[1]);
                     allTasks[numTasks] = d;
                     System.out.println("----------------------------------------------------");
@@ -76,6 +93,12 @@ public class Duke {
                     break;
                 case "event":
                     String[] eventParts = actionArr[1].split("/at");
+                    if (eventParts.length==1){
+                        System.out.println("----------------------------------------------------");
+                        System.out.println("OOPS!! You did not include an event date using /at. :(");
+                        System.out.println("----------------------------------------------------");
+                        break;
+                    }
                     Event e = new Event(eventParts[0], eventParts[1]);
                     allTasks[numTasks] = e;
                     System.out.println("----------------------------------------------------");
@@ -86,6 +109,9 @@ public class Duke {
                     System.out.println("----------------------------------------------------");
                     break;
                 default:
+                    System.out.println("----------------------------------------------------");
+                    System.out.println("OOPS!!! I'm sorry, but I don't know what that means :-(");
+                    System.out.println("----------------------------------------------------");
                     break;
 
             }
