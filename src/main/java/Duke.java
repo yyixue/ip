@@ -1,4 +1,7 @@
 import java.util.Scanner;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 import task.*;
 
 class DukeException extends Exception {
@@ -8,6 +11,19 @@ class DukeException extends Exception {
 }
 
 public class Duke {
+    private static void appendToFile(String filePath, String textToAppend) throws IOException {
+        FileWriter fw = new FileWriter(filePath, true); // create a FileWriter in append mode
+        fw.write(textToAppend);
+        fw.close();
+    }
+
+    private static void writeToFile(String filePath, String textToAdd) throws IOException {
+        FileWriter fw = new FileWriter(filePath);
+        fw.write(textToAdd);
+        fw.close();
+    }
+
+
     public static void main(String[] args){
 
         String action = null;
@@ -15,6 +31,7 @@ public class Duke {
         Task[] allTasks = new Task[100];
         int numTasks = 0;
         int taskNum = 0;
+        String filePath = "tasks.txt";
 
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -49,6 +66,27 @@ public class Duke {
                     allTasks[taskNum].setDone();
                     System.out.println("You've completed " + allTasks[taskNum].getTask() + "!");
                     System.out.println("----------------------------------------------------");
+
+                    for(int i=0; i < allTasks.length; i++) {
+                        taskNum = i + 1;
+                        if (taskNum == 1) {
+                            try {
+                                writeToFile(filePath, taskNum + ". " + allTasks[i].toString() + "\n");
+                            } catch (IOException e) {
+                                System.out.println("Something went wrong: " + e.getMessage());
+                            }
+                        } else {
+                            if (taskNum <= allTasks.size()) {
+                                try {
+                                    appendToFile(filePath, taskNum + ". " + allTasks[i].toString() + "\n");
+                                } catch (IOException e) {
+                                    System.out.println("Something went wrong: " + e.getMessage());
+                                }
+                            } else {
+                                break;
+                            }
+                        }
+                    }
                     break;
                 case "list":
                     System.out.println("Your current tasks: ");
