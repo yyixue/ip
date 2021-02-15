@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 import task.*;
 
 class DukeException extends Exception {
@@ -12,8 +13,7 @@ public class Duke {
 
         String action = null;
         Scanner input = new Scanner(System.in);
-        Task[] allTasks = new Task[100];
-        int numTasks = 0;
+        ArrayList<Task> allTasks = new ArrayList<>();
         int taskNum = 0;
 
         String logo = " ____        _        \n"
@@ -44,18 +44,50 @@ public class Duke {
                         System.out.println(a);
                         break;
                     }
+                    try {
+                        if (taskNum > allTasks.size()) {
+                            throw new DukeException("OOPS!! Please enter a valid integer for the task index.");
+                        }
+                    } catch (DukeException k) {
+                        System.out.println(k);
+                        break;
+                    }
                     taskNum = Integer.parseInt(actionArr[1]);
                     taskNum = taskNum - 1;
-                    allTasks[taskNum].setDone();
-                    System.out.println("You've completed " + allTasks[taskNum].getTask() + "!");
+                    allTasks.get(taskNum).setDone();
+                    System.out.println("You've completed " + allTasks.get(taskNum).getTask() + "!");
                     System.out.println("----------------------------------------------------");
+                    break;
+                case "delete":
+                    try {
+                        if (actionArr.length == 1) {
+                            throw new DukeException("OOPS!!! Please indicate the task you want to mark as done.");
+                        }
+                    } catch (DukeException a){
+                        System.out.println(a);
+                        break;
+                    }
+                    try {
+                        if (taskNum > allTasks.size()) {
+                            throw new DukeException("OOPS!! Please enter a valid integer for the task index.");
+                        }
+                    } catch (DukeException k) {
+                        System.out.println(k);
+                        break;
+                    }
+                    taskNum = Integer.parseInt(actionArr[1]);
+                    taskNum = taskNum - 1;
+                    System.out.println("Noted. I have removed this task:");
+                    System.out.println(allTasks.get(taskNum).toString());
+                    allTasks.remove(taskNum);
+                    System.out.println("Now you have " + allTasks.size() + " tasks in the list.");
                     break;
                 case "list":
                     System.out.println("Your current tasks: ");
-                    for(int i=0; i < allTasks.length; i++) {
-                        if (allTasks[i] != null) {
+                    for(int i=0; i < allTasks.size(); i++) {
+                        if (allTasks.get(i) != null) {
                             taskNum = i + 1;
-                            System.out.println(taskNum + ". " + allTasks[i].toString());
+                            System.out.println(taskNum + ". " + allTasks.get(i).toString());
                         }
                     }
                     System.out.println("----------------------------------------------------");
@@ -70,12 +102,11 @@ public class Duke {
                         break;
                     }
                     Todo t = new Todo(actionArr[1]);
-                    allTasks[numTasks] = t;
+                    allTasks.add(t);
                     System.out.println("----------------------------------------------------");
                     System.out.println("Got it. I've added this task:");
                     t.toString();
-                    numTasks++;
-                    System.out.println("Now you have " + String.valueOf(numTasks) + " tasks in the list.");
+                    System.out.println("Now you have " + allTasks.size() + " tasks in the list.");
                     System.out.println("----------------------------------------------------");
                     break;
                 case "deadline":
@@ -97,12 +128,11 @@ public class Duke {
                         break;
                     }
                     Deadline d = new Deadline(deadlineParts[0], deadlineParts[1]);
-                    allTasks[numTasks] = d;
+                    allTasks.add(d);
                     System.out.println("----------------------------------------------------");
                     System.out.println("Got it. I've added this task:");
                     d.toString();
-                    numTasks ++;
-                    System.out.println("Now you have "+ String.valueOf(numTasks) +" tasks in the list.");
+                    System.out.println("Now you have "+ allTasks.size() +" tasks in the list.");
                     System.out.println("----------------------------------------------------");
                     break;
                 case "event":
@@ -124,12 +154,11 @@ public class Duke {
                         break;
                     }
                     Event e = new Event(eventParts[0], eventParts[1]);
-                    allTasks[numTasks] = e;
+                    allTasks.add(e);
                     System.out.println("----------------------------------------------------");
                     System.out.println("Got it. I've added this task:");
                     e.toString();
-                    numTasks ++;
-                    System.out.println("Now you have "+ String.valueOf(numTasks) +" tasks in the list.");
+                    System.out.println("Now you have "+ allTasks.size() +" tasks in the list.");
                     System.out.println("----------------------------------------------------");
                     break;
                 default:
