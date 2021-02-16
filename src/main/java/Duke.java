@@ -1,5 +1,7 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.FileWriter;
+import java.io.IOException;
 import task.*;
 
 class DukeException extends Exception {
@@ -9,12 +11,24 @@ class DukeException extends Exception {
 }
 
 public class Duke {
+    private static void appendToFile(String filePath, String textToAppend) throws IOException {
+        FileWriter fw = new FileWriter(filePath, true); // create a FileWriter in append mode
+        fw.write(textToAppend);
+        fw.close();
+    }
+
+    private static void writeToFile(String filePath, String textToAdd) throws IOException {
+        FileWriter fw = new FileWriter(filePath);
+        fw.write(textToAdd);
+        fw.close();
+    }
     public static void main(String[] args){
 
         String action = null;
         Scanner input = new Scanner(System.in);
         ArrayList<Task> allTasks = new ArrayList<>();
         int taskNum = 0;
+        String filePath = "tasks.txt";
 
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -57,6 +71,26 @@ public class Duke {
                     allTasks.get(taskNum).setDone();
                     System.out.println("You've completed " + allTasks.get(taskNum).getTask() + "!");
                     System.out.println("----------------------------------------------------");
+                    for(int i=0; i < allTasks.size(); i++) {
+                        taskNum = i + 1;
+                        if (taskNum == 1) {
+                            try {
+                                writeToFile(filePath, taskNum + ". " + allTasks.get(i).toString() + "\n");
+                            } catch (IOException e) {
+                                System.out.println("Something went wrong: " + e.getMessage());
+                            }
+                        } else {
+                            if (taskNum <= allTasks.size()) {
+                                try {
+                                    appendToFile(filePath, taskNum + ". " + allTasks.get(i).toString() + "\n");
+                                } catch (IOException e) {
+                                    System.out.println("Something went wrong: " + e.getMessage());
+                                }
+                            } else {
+                                break;
+                            }
+                        }
+                    }
                     break;
                 case "delete":
                     try {
@@ -108,6 +142,20 @@ public class Duke {
                     t.toString();
                     System.out.println("Now you have " + allTasks.size() + " tasks in the list.");
                     System.out.println("----------------------------------------------------");
+                    taskNum = allTasks.size();
+                    if (taskNum==1) {
+                        try {
+                            writeToFile(filePath, taskNum + ". " + allTasks.get(taskNum-1).toString() + "\n");
+                        } catch (IOException e) {
+                            System.out.println("Something went wrong: " + e.getMessage());
+                        }
+                    } else {
+                        try {
+                            appendToFile(filePath, taskNum + ". " + allTasks.get(taskNum-1).toString() + "\n");
+                        } catch (IOException e) {
+                            System.out.println("Something went wrong: " + e.getMessage());
+                        }
+                    }
                     break;
                 case "deadline":
                     try {
@@ -134,6 +182,20 @@ public class Duke {
                     d.toString();
                     System.out.println("Now you have "+ allTasks.size() +" tasks in the list.");
                     System.out.println("----------------------------------------------------");
+                    taskNum = allTasks.size();
+                    if (taskNum==1) {
+                        try {
+                            writeToFile(filePath, taskNum + ". " + allTasks.get(taskNum-1).toString() + "\n");
+                        } catch (IOException e) {
+                            System.out.println("Something went wrong: " + e.getMessage());
+                        }
+                    } else {
+                        try {
+                            appendToFile(filePath, taskNum + ". " + allTasks.get(taskNum-1).toString() + "\n");
+                        } catch (IOException e) {
+                            System.out.println("Something went wrong: " + e.getMessage());
+                        }
+                    }
                     break;
                 case "event":
                     try {
@@ -160,6 +222,20 @@ public class Duke {
                     e.toString();
                     System.out.println("Now you have "+ allTasks.size() +" tasks in the list.");
                     System.out.println("----------------------------------------------------");
+                    taskNum = allTasks.size();
+                    if (taskNum==1) {
+                        try {
+                            writeToFile(filePath, taskNum + ". " + allTasks.get(taskNum-1).toString() + "\n");
+                        } catch (IOException p) {
+                            System.out.println("Something went wrong: " + p.getMessage());
+                        }
+                    } else {
+                        try {
+                            appendToFile(filePath, taskNum + ". " + allTasks.get(taskNum-1).toString() + "\n");
+                        } catch (IOException p) {
+                            System.out.println("Something went wrong: " + p.getMessage());
+                        }
+                    }
                     break;
                 default:
                     System.out.println("----------------------------------------------------");
@@ -177,4 +253,5 @@ public class Duke {
 
     }
 }
+
 
