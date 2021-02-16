@@ -115,6 +115,26 @@ public class Duke {
                     System.out.println(allTasks.get(taskNum).toString());
                     allTasks.remove(taskNum);
                     System.out.println("Now you have " + allTasks.size() + " tasks in the list.");
+                    for(int i=0; i < allTasks.size(); i++) {
+                        taskNum = i + 1;
+                        if (taskNum == 1) {
+                            try {
+                                writeToFile(filePath, taskNum + ". " + allTasks.get(i).toString() + "\n");
+                            } catch (IOException e) {
+                                System.out.println("Something went wrong: " + e.getMessage());
+                            }
+                        } else {
+                            if (taskNum <= allTasks.size()) {
+                                try {
+                                    appendToFile(filePath, taskNum + ". " + allTasks.get(i).toString() + "\n");
+                                } catch (IOException e) {
+                                    System.out.println("Something went wrong: " + e.getMessage());
+                                }
+                            } else {
+                                break;
+                            }
+                        }
+                    }
                     break;
                 case "list":
                     System.out.println("Your current tasks: ");
