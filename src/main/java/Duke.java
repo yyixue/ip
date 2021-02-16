@@ -1,7 +1,7 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import task.*;
 
 class DukeException extends Exception {
@@ -22,14 +22,11 @@ public class Duke {
         fw.write(textToAdd);
         fw.close();
     }
-
-
     public static void main(String[] args){
 
         String action = null;
         Scanner input = new Scanner(System.in);
-        Task[] allTasks = new Task[100];
-        int numTasks = 0;
+        ArrayList<Task> allTasks = new ArrayList<>();
         int taskNum = 0;
         String filePath = "tasks.txt";
 
@@ -61,24 +58,31 @@ public class Duke {
                         System.out.println(a);
                         break;
                     }
+                    try {
+                        if (taskNum > allTasks.size()) {
+                            throw new DukeException("OOPS!! Please enter a valid integer for the task index.");
+                        }
+                    } catch (DukeException k) {
+                        System.out.println(k);
+                        break;
+                    }
                     taskNum = Integer.parseInt(actionArr[1]);
                     taskNum = taskNum - 1;
-                    allTasks[taskNum].setDone();
-                    System.out.println("You've completed " + allTasks[taskNum].getTask() + "!");
+                    allTasks.get(taskNum).setDone();
+                    System.out.println("You've completed " + allTasks.get(taskNum).getTask() + "!");
                     System.out.println("----------------------------------------------------");
-
-                    for(int i=0; i < allTasks.length; i++) {
+                    for(int i=0; i < allTasks.size(); i++) {
                         taskNum = i + 1;
                         if (taskNum == 1) {
                             try {
-                                writeToFile(filePath, taskNum + ". " + allTasks[i].toString() + "\n");
+                                writeToFile(filePath, taskNum + ". " + allTasks.get(i).toString() + "\n");
                             } catch (IOException e) {
                                 System.out.println("Something went wrong: " + e.getMessage());
                             }
                         } else {
                             if (taskNum <= allTasks.size()) {
                                 try {
-                                    appendToFile(filePath, taskNum + ". " + allTasks[i].toString() + "\n");
+                                    appendToFile(filePath, taskNum + ". " + allTasks.get(i).toString() + "\n");
                                 } catch (IOException e) {
                                     System.out.println("Something went wrong: " + e.getMessage());
                                 }
@@ -90,10 +94,10 @@ public class Duke {
                     break;
                 case "list":
                     System.out.println("Your current tasks: ");
-                    for(int i=0; i < allTasks.length; i++) {
-                        if (allTasks[i] != null) {
+                    for(int i=0; i < allTasks.size(); i++) {
+                        if (allTasks.get(i) != null) {
                             taskNum = i + 1;
-                            System.out.println(taskNum + ". " + allTasks[i].toString());
+                            System.out.println(taskNum + ". " + allTasks.get(i).toString());
                         }
                     }
                     System.out.println("----------------------------------------------------");
@@ -108,13 +112,26 @@ public class Duke {
                         break;
                     }
                     Todo t = new Todo(actionArr[1]);
-                    allTasks[numTasks] = t;
+                    allTasks.add(t);
                     System.out.println("----------------------------------------------------");
                     System.out.println("Got it. I've added this task:");
                     t.toString();
-                    numTasks++;
-                    System.out.println("Now you have " + String.valueOf(numTasks) + " tasks in the list.");
+                    System.out.println("Now you have " + allTasks.size() + " tasks in the list.");
                     System.out.println("----------------------------------------------------");
+                    taskNum = allTasks.size();
+                    if (taskNum==1) {
+                        try {
+                            writeToFile(filePath, taskNum + ". " + allTasks.get(taskNum-1).toString() + "\n");
+                        } catch (IOException e) {
+                            System.out.println("Something went wrong: " + e.getMessage());
+                        }
+                    } else {
+                        try {
+                            appendToFile(filePath, taskNum + ". " + allTasks.get(taskNum-1).toString() + "\n");
+                        } catch (IOException e) {
+                            System.out.println("Something went wrong: " + e.getMessage());
+                        }
+                    }
                     break;
                 case "deadline":
                     try {
@@ -135,13 +152,26 @@ public class Duke {
                         break;
                     }
                     Deadline d = new Deadline(deadlineParts[0], deadlineParts[1]);
-                    allTasks[numTasks] = d;
+                    allTasks.add(d);
                     System.out.println("----------------------------------------------------");
                     System.out.println("Got it. I've added this task:");
                     d.toString();
-                    numTasks ++;
-                    System.out.println("Now you have "+ String.valueOf(numTasks) +" tasks in the list.");
+                    System.out.println("Now you have "+ allTasks.size() +" tasks in the list.");
                     System.out.println("----------------------------------------------------");
+                    taskNum = allTasks.size();
+                    if (taskNum==1) {
+                        try {
+                            writeToFile(filePath, taskNum + ". " + allTasks.get(taskNum-1).toString() + "\n");
+                        } catch (IOException e) {
+                            System.out.println("Something went wrong: " + e.getMessage());
+                        }
+                    } else {
+                        try {
+                            appendToFile(filePath, taskNum + ". " + allTasks.get(taskNum-1).toString() + "\n");
+                        } catch (IOException e) {
+                            System.out.println("Something went wrong: " + e.getMessage());
+                        }
+                    }
                     break;
                 case "event":
                     try {
@@ -162,13 +192,26 @@ public class Duke {
                         break;
                     }
                     Event e = new Event(eventParts[0], eventParts[1]);
-                    allTasks[numTasks] = e;
+                    allTasks.add(e);
                     System.out.println("----------------------------------------------------");
                     System.out.println("Got it. I've added this task:");
                     e.toString();
-                    numTasks ++;
-                    System.out.println("Now you have "+ String.valueOf(numTasks) +" tasks in the list.");
+                    System.out.println("Now you have "+ allTasks.size() +" tasks in the list.");
                     System.out.println("----------------------------------------------------");
+                    taskNum = allTasks.size();
+                    if (taskNum==1) {
+                        try {
+                            writeToFile(filePath, taskNum + ". " + allTasks.get(taskNum-1).toString() + "\n");
+                        } catch (IOException p) {
+                            System.out.println("Something went wrong: " + p.getMessage());
+                        }
+                    } else {
+                        try {
+                            appendToFile(filePath, taskNum + ". " + allTasks.get(taskNum-1).toString() + "\n");
+                        } catch (IOException p) {
+                            System.out.println("Something went wrong: " + p.getMessage());
+                        }
+                    }
                     break;
                 default:
                     System.out.println("----------------------------------------------------");
@@ -186,4 +229,5 @@ public class Duke {
 
     }
 }
+
 
