@@ -1,6 +1,8 @@
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.FileWriter;
+import java.io.File;
 import java.io.IOException;
 import task.*;
 
@@ -11,6 +13,9 @@ class DukeException extends Exception {
 }
 
 public class Duke {
+
+    public static ArrayList<Task> allTasks = new ArrayList<>();
+
     private static void appendToFile(String filePath, String textToAppend) throws IOException {
         FileWriter fw = new FileWriter(filePath, true); // create a FileWriter in append mode
         fw.write(textToAppend);
@@ -22,13 +27,57 @@ public class Duke {
         fw.write(textToAdd);
         fw.close();
     }
-    public static void main(String[] args){
+
+    private static void ReadFile(File fileObj) throws FileNotFoundException{
+        try {
+            Scanner fileReader = new Scanner(fileObj);
+            while (fileReader.hasNextLine()) {
+                String line = fileReader.nextLine();
+                char taskType = line.charAt(4);
+                char doneStatus = line.charAt(7);
+                String subLine = line.substring(10);
+                switch (taskType) {
+                    case 'T':
+                        Todo t = new Todo(subLine);
+                        if (doneStatus == 'X') {
+                            t.setDone();
+                        }
+                        allTasks.add(t);
+                        break;
+                    case 'D':
+                        String[] deadlineParts = subLine.split(" \\(by: ");
+                        Deadline d = new Deadline(deadlineParts[0], deadlineParts[1].substring(0, deadlineParts[1].length() -1));
+                        if (doneStatus == 'X') {
+                            d.setDone();
+                        }
+                        allTasks.add(d);
+                        break;
+                    case 'E':
+                        String[] eventParts = subLine.split(" \\(at: ");
+                        Event e = new Event(eventParts[0], eventParts[1].substring(0, eventParts[1].length()-1));
+                        if (doneStatus == 'X') {
+                            e.setDone();
+                        }
+                        allTasks.add(e);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            fileReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void main(String[] args) throws FileNotFoundException {
 
         String action = null;
         Scanner input = new Scanner(System.in);
-        ArrayList<Task> allTasks = new ArrayList<>();
         int taskNum = 0;
-        String filePath = "tasks.txt";
+        String filePath = "/Users/yanyixue/Desktop/year3/sem2/CS2113/ip/tasks.txt";
 
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -44,6 +93,11 @@ public class Duke {
 
         // obtain string input
         if(!input.hasNext() || (action = input.nextLine()).isEmpty()) System.exit(0);
+
+        File f = new File(filePath);
+        if(f.exists() && !f.isDirectory()) {
+            ReadFile(f);
+        }
 
         while (!action.equalsIgnoreCase("Bye")){
             String actionArr[] = action.split(" ", 2);
@@ -231,8 +285,8 @@ public class Duke {
                         if (eventParts.length == 1) {
                             throw new DukeException("OOPS!! You did not include an event date using /at. :(");
                         }
-                    } catch (DukeException f){
-                        System.out.println(f);
+                    } catch (DukeException z){
+                        System.out.println(z);
                         break;
                     }
                     Event e = new Event(eventParts[0], eventParts[1]);
