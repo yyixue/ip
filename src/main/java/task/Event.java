@@ -46,15 +46,15 @@ public class Event extends Task{
     public String toString() {
         if (Pattern.matches(DATETIME_FORMAT, at.trim())) {
             String formattedDateTime = this.datetime.format(DateTimeFormatter.ofPattern(FINAL_DATETIME_FORMAT));
-            return "[E]" + super.toString() + " (by: " + formattedDateTime + ")";
+            return "[E]" + super.toString() + " (at: " + formattedDateTime + ")";
         } else if (Pattern.matches(TIME_FORMAT, at.trim())) {
             String formattedTime = this.time.format(DateTimeFormatter.ofPattern(FINAL_TIME_FORMAT));
-            return "[E]" + super.toString() + " (by: " + formattedTime + ")";
+            return "[E]" + super.toString() + " (at: " + formattedTime + ")";
         } else if (Pattern.matches(DATE_FORMAT, at.trim())) {
             String formattedDate = this.date.format(DateTimeFormatter.ofPattern(FINAL_DATE_FORMAT));
-            return "[E]" + super.toString() + " (by: " + formattedDate + ")";
+            return "[E]" + super.toString() + " (at: " + formattedDate + ")";
         } else {
-            return "[E]" + super.toString() + " (by: " + at + ")";
+            return "[E]" + super.toString() + " (at: " + at + ")";
         }
     }
 }
