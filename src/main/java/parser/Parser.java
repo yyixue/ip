@@ -23,6 +23,8 @@ public class Parser {
 
     private static final String EVENT_COMMAND = "event";
 
+    private static final String EXIT_COMMAND = "bye";
+
     public static void parseCommand(String userInput) {
 
         String actionArr[] = userInput.split(" ", 2);
@@ -129,6 +131,9 @@ public class Parser {
                 }
                 break;
 
+            case EXIT_COMMAND:
+                break;
+
             default:
                 TextUi.showInvalidInputMessage();
         }
@@ -146,12 +151,12 @@ public class Parser {
             if (deadlineParts.length == 1) {
                 throw new ParseException("OOPS!! You did not include a deadline using /by. :(");
             }
+            Deadline d = new Deadline(deadlineParts[0], deadlineParts[1]);
+            TaskList.allTasks.add(d);
+            TextUi.taskAddedMessage(d);
         } catch (ParseException d){
             System.out.println(d);
         }
-        Deadline d = new Deadline(deadlineParts[0], deadlineParts[1]);
-        TaskList.allTasks.add(d);
-        TextUi.taskAddedMessage(d);
     }
 
     private static void createEvent(String eventDescription) {
@@ -160,12 +165,13 @@ public class Parser {
             if (eventParts.length == 1) {
                 throw new ParseException("OOPS!! You did not include an event date using /at. :(");
             }
+            Event e = new Event(eventParts[0], eventParts[1]);
+            TaskList.allTasks.add(e);
+            TextUi.taskAddedMessage(e);
         } catch (ParseException z){
             System.out.println(z);
         }
-        Event e = new Event(eventParts[0], eventParts[1]);
-        TaskList.allTasks.add(e);
-        TextUi.taskAddedMessage(e);
+
     }
 
 
