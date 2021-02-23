@@ -2,12 +2,14 @@ package parser;
 
 import task.Deadline;
 import task.Event;
+import task.Task;
 import task.Todo;
 import tasklist.TaskList;
 import ui.TextUi;
 import storage.Storage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Parser {
 
@@ -23,10 +25,13 @@ public class Parser {
 
     private static final String EVENT_COMMAND = "event";
 
+    private static final String FIND_COMMAND = "find";
+
     public static void parseCommand(String userInput) {
 
         String actionArr[] = userInput.split(" ", 2);
         int taskNum;
+        ArrayList<Task> matchList;
         switch(actionArr[0].toLowerCase()) {
 
             case TODO_COMMAND:
@@ -123,10 +128,16 @@ public class Parser {
                 taskNum = taskNum - 1;
                 TextUi.taskDeleteMessage(taskNum);
                 TaskList.allTasks.remove(taskNum);
-                for(int i=0; i < TaskList.allTasks.size(); i++) {
+                for (int i=0; i < TaskList.allTasks.size(); i++) {
                     taskNum = i + 1;
                     storeTask(taskNum);
                 }
+                break;
+
+            case FIND_COMMAND:
+                String findKeyword = actionArr[1];
+                matchList = getMatches(findKeyword);
+                TextUi.showMatchedTasks(matchList);
                 break;
 
             default:
@@ -146,12 +157,12 @@ public class Parser {
             if (deadlineParts.length == 1) {
                 throw new ParseException("OOPS!! You did not include a deadline using /by. :(");
             }
+            Deadline d = new Deadline(deadlineParts[0], deadlineParts[1]);
+            TaskList.allTasks.add(d);
+            TextUi.taskAddedMessage(d);
         } catch (ParseException d){
             System.out.println(d);
         }
-        Deadline d = new Deadline(deadlineParts[0], deadlineParts[1]);
-        TaskList.allTasks.add(d);
-        TextUi.taskAddedMessage(d);
     }
 
     private static void createEvent(String eventDescription) {
@@ -160,12 +171,12 @@ public class Parser {
             if (eventParts.length == 1) {
                 throw new ParseException("OOPS!! You did not include an event date using /at. :(");
             }
+            Event e = new Event(eventParts[0], eventParts[1]);
+            TaskList.allTasks.add(e);
+            TextUi.taskAddedMessage(e);
         } catch (ParseException z){
             System.out.println(z);
         }
-        Event e = new Event(eventParts[0], eventParts[1]);
-        TaskList.allTasks.add(e);
-        TextUi.taskAddedMessage(e);
     }
 
 
@@ -183,6 +194,16 @@ public class Parser {
                 System.out.println("Something went wrong: " + e.getMessage());
             }
         }
+    }
+
+    private static ArrayList<Task> getMatches(String keyword) {
+        ArrayList<Task> matchList = new ArrayList<>();
+        for (int i=0; i < TaskList.allTasks.size(); i++) {
+            if (TaskList.allTasks.get(i).getTask().toLowerCase().contains(keyword.toLowerCase())) {
+                matchList.add(TaskList.allTasks.get(i));
+            }
+        }
+        return matchList;
     }
 
     public static class ParseException extends Exception {
