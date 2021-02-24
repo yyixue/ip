@@ -4,6 +4,9 @@ import task.Task;
 
 import java.util.ArrayList;
 
+/**
+ * Represents the entire task list.
+ */
 public class TaskList {
 
     public static ArrayList<Task> allTasks;

@@ -1,31 +1,37 @@
 package task;
 
+/**
+ * Represents a task in the task list.
+ */
 public class Task {
 
     protected boolean done;
     protected String task;
-    protected int id;
-    protected static int numberOfTasks = 0;
 
     public Task(String task) {
         this.done = false;
         this.task = task;
-        numberOfTasks++;
-        id = numberOfTasks;
     }
 
-    public int getID() {
-        return id;
-    }
-
+    /**
+     * Formats the task description as text.
+     * @return String task.
+     */
     public String getTask() {
         return task;
     }
 
+    /**
+     * Mark the task as done.
+     */
     public void setDone() {
         done = true;
     }
 
+    /**
+     * Format the done status of the task as text.
+     * @return String done status.
+     */
     public String getDone() {
         if (done) {
             return "[X]";
@@ -34,10 +40,10 @@ public class Task {
         }
     }
 
-    public static int getNumberOfTasks() {
-        return numberOfTasks;
-    }
-
+    /**
+     * Format the entire task and done status as text.
+     * @return String done status and task.
+     */
     public String toString() {
         return getDone() + " " + task;
     }

@@ -13,10 +13,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Represents any file-related actions such as loading tasks from
+ * the file and saving tasks in the file.
+ */
 public class Storage {
 
     private static String filePath;
 
+    /**
+     * Creates a new file for storing tasks using the input filepath if the file
+     * does not exist.
+     * If the file exists, read the contents of the file to get all existing tasks.
+     * @param filePath path to the .txt file that stores all tasks.
+     */
     public Storage(String filePath) {
         File f = new File(filePath);
         Storage.filePath = filePath;
@@ -25,12 +35,22 @@ public class Storage {
         }
     }
 
+    /**
+     * Add task to the .txt file that stores all tasks.
+     * @param textToAppend String format of the task to add into the .txt file.
+     * @throws IOException if the .txt file cannot be found.
+     */
     public static void appendToFile(String textToAppend) throws IOException {
-        FileWriter fw = new FileWriter(Storage.filePath, true); // create a FileWriter in append mode
+        FileWriter fw = new FileWriter(Storage.filePath, true);
         fw.write(textToAppend);
         fw.close();
     }
 
+    /**
+     * Add task to an empty .txt file that stores all tasks.
+     * @param textToAdd String format of the task to add into the .txt file.
+     * @throws IOException if the .txt file cannot be found.
+     */
     public static void writeToFile(String textToAdd) throws IOException {
         FileWriter fw = new FileWriter(Storage.filePath);
         fw.write(textToAdd);
@@ -80,6 +100,10 @@ public class Storage {
         }
     }
 
+    /**
+     * Get an ArrayList of existing tasks from the .txt file.
+     * @return ArrayList<Task></Task> TaskList.allTasks
+     */
     public static ArrayList<Task> getSavedTasks(){
         return TaskList.allTasks;
     }
