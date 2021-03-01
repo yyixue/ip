@@ -6,6 +6,9 @@ import java.time.LocalDateTime;
 import java.util.regex.Pattern;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represents an event in the task list.
+ */
 public class Event extends Task{
     protected String at;
     protected LocalTime time;
@@ -18,6 +21,11 @@ public class Event extends Task{
     private static final String FINAL_DATE_FORMAT = "MMM dd yyyy";
     private static final String FINAL_TIME_FORMAT = "HH:mm";
 
+    /**
+     * Create event.
+     * @param task String description of the event.
+     * @param at String date and time of the event.
+     */
     public Event(String task, String at) {
         super(task);
         this.at = at;
@@ -42,6 +50,11 @@ public class Event extends Task{
         }
     }
 
+    /**
+     * Add [E] symbol that represents an event.
+     * @return String formatted task in text format with task type,
+     * done status and task description.
+     */
     @Override
     public String toString() {
         if (Pattern.matches(DATETIME_FORMAT, at.trim())) {

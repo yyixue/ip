@@ -9,6 +9,9 @@ import storage.Storage;
 
 import java.io.IOException;
 
+/**
+ * Represents all methods to make sense of the user command and execute.
+ */
 public class Parser {
 
     private static final String DONE_COMMAND = "done";
@@ -25,9 +28,13 @@ public class Parser {
 
     private static final String EXIT_COMMAND = "bye";
 
+    /**
+     * Parses user input for execution.
+     * @param userInput full user input string.
+     */
     public static void parseCommand(String userInput) {
 
-        String actionArr[] = userInput.split(" ", 2);
+        String[] actionArr = userInput.split(" ", 2);
         int taskNum;
         switch(actionArr[0].toLowerCase()) {
 
@@ -191,12 +198,18 @@ public class Parser {
         }
     }
 
+    /**
+     * Signals that the user input could not be parsed.
+     */
     public static class ParseException extends Exception {
         ParseException(String message) {
             super(message);
         }
     }
 
+    /**
+     * Signals that the user's input task number does not exist in the task list.
+     */
     public static class IllegalValueException extends Exception {
         IllegalValueException(String message) {
             super(message);

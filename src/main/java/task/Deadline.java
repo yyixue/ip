@@ -1,11 +1,15 @@
 package task;
 
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.LocalDateTime;
 import java.util.regex.Pattern;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represents a deadline in the task list.
+ */
 public class Deadline extends Task{
     protected String by;
     protected LocalTime time;
@@ -18,6 +22,11 @@ public class Deadline extends Task{
     private static final String FINAL_DATE_FORMAT = "MMM dd yyyy";
     private static final String FINAL_TIME_FORMAT = "HH:mm";
 
+    /**
+     * Create deadline.
+     * @param task String description of the deadline.
+     * @param by String date and time of the deadline.
+     */
     public Deadline(String task, String by) {
         super(task);
         this.by = by;
@@ -43,6 +52,11 @@ public class Deadline extends Task{
     }
 
 
+    /**
+     * Add [D] symbol that represents a deadline.
+     * @return String formatted task in text format with task type,
+     * done status and task description.
+     */
     @Override
     public String toString() {
         if (Pattern.matches(DATETIME_FORMAT, by.trim())) {
