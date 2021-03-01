@@ -48,13 +48,13 @@ public class Parser {
                     if (actionArr.length == 1) {
                         throw new ParseException("OOPS!!! The description of a todo cannot be empty.");
                     }
+                    createTodo(actionArr[1]);
+                    taskNum = TaskList.allTasks.size();
+                    storeTask(taskNum);
                 } catch (ParseException b){
                     System.out.println(b);
                     break;
                 }
-                createTodo(actionArr[1]);
-                taskNum = TaskList.allTasks.size();
-                storeTask(taskNum);
                 break;
 
             case DEADLINE_COMMAND:
@@ -62,13 +62,13 @@ public class Parser {
                     if (actionArr.length == 1) {
                         throw new ParseException("OOPS!!! Deadline description cannot be empty.");
                     }
+                    createDeadline(actionArr[1]);
+                    taskNum = TaskList.allTasks.size();
+                    storeTask(taskNum);
                 } catch (ParseException c){
                     System.out.println(c);
                     break;
                 }
-                createDeadline(actionArr[1]);
-                taskNum = TaskList.allTasks.size();
-                storeTask(taskNum);
                 break;
 
             case EVENT_COMMAND:
@@ -76,13 +76,14 @@ public class Parser {
                     if (actionArr.length == 1) {
                         throw new ParseException("OOPS!!! Event description cannot be empty.");
                     }
+                    createEvent(actionArr[1]);
+                    taskNum = TaskList.allTasks.size();
+                    storeTask(taskNum);
                 } catch (ParseException e){
                     System.out.println(e);
                     break;
                 }
-                createEvent(actionArr[1]);
-                taskNum = TaskList.allTasks.size();
-                storeTask(taskNum);
+
                 break;
 
             case LIST_COMMAND:
@@ -94,25 +95,25 @@ public class Parser {
                     if (actionArr.length == 1) {
                         throw new ParseException("OOPS!!! Please indicate the task you want to mark as done.");
                     }
+                    taskNum = Integer.parseInt(actionArr[1]);
+                    try {
+                        if (taskNum > TaskList.allTasks.size()) {
+                            throw new IllegalValueException("OOPS!! Please enter a valid integer for the task index.");
+                        }
+                        taskNum = taskNum - 1;
+                        TaskList.allTasks.get(taskNum).setDone();
+                        TextUi.taskDoneMessage(taskNum);
+                        for(int i=0; i < TaskList.allTasks.size(); i++) {
+                            taskNum = i + 1;
+                            storeTask(taskNum);
+                        }
+                    } catch (IllegalValueException k) {
+                        System.out.println(k);
+                        break;
+                    }
                 } catch (ParseException a){
                     System.out.println(a);
                     break;
-                }
-                taskNum = Integer.parseInt(actionArr[1]);
-                try {
-                    if (taskNum > TaskList.allTasks.size()) {
-                        throw new IllegalValueException("OOPS!! Please enter a valid integer for the task index.");
-                    }
-                } catch (IllegalValueException k) {
-                    System.out.println(k);
-                    break;
-                }
-                taskNum = taskNum - 1;
-                TaskList.allTasks.get(taskNum).setDone();
-                TextUi.taskDoneMessage(taskNum);
-                for(int i=0; i < TaskList.allTasks.size(); i++) {
-                    taskNum = i + 1;
-                    storeTask(taskNum);
                 }
                 break;
 
@@ -121,25 +122,25 @@ public class Parser {
                     if (actionArr.length == 1) {
                         throw new ParseException("OOPS!!! Please indicate the task you want to mark as done.");
                     }
+                    taskNum = Integer.parseInt(actionArr[1]);
+                    try {
+                        if (taskNum > TaskList.allTasks.size()) {
+                            throw new IllegalValueException("OOPS!! Please enter a valid integer for the task index.");
+                        }
+                        taskNum = taskNum - 1;
+                        TextUi.taskDeleteMessage(taskNum);
+                        TaskList.allTasks.remove(taskNum);
+                        for (int i=0; i < TaskList.allTasks.size(); i++) {
+                            taskNum = i + 1;
+                            storeTask(taskNum);
+                        }
+                    } catch (IllegalValueException k) {
+                        System.out.println(k);
+                        break;
+                    }
                 } catch (ParseException a){
                     System.out.println(a);
                     break;
-                }
-                taskNum = Integer.parseInt(actionArr[1]);
-                try {
-                    if (taskNum > TaskList.allTasks.size()) {
-                        throw new IllegalValueException("OOPS!! Please enter a valid integer for the task index.");
-                    }
-                } catch (IllegalValueException k) {
-                    System.out.println(k);
-                    break;
-                }
-                taskNum = taskNum - 1;
-                TextUi.taskDeleteMessage(taskNum);
-                TaskList.allTasks.remove(taskNum);
-                for (int i=0; i < TaskList.allTasks.size(); i++) {
-                    taskNum = i + 1;
-                    storeTask(taskNum);
                 }
                 break;
 

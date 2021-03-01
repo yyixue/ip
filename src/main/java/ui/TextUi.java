@@ -107,6 +107,10 @@ public class TextUi {
         System.out.println(LINE_BREAK);
     }
 
+    /**
+     * Shows user tasks in his task list that match his keyword.
+     * @param matchList List of matched tasks.
+     */
     public static void showMatchedTasks(ArrayList<Task> matchList) {
         System.out.println(LINE_BREAK);
         for (int i=0; i < matchList.size(); i++) {
