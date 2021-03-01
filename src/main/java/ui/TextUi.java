@@ -3,6 +3,7 @@ package ui;
 import tasklist.TaskList;
 import task.Task;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -67,6 +68,7 @@ public class TextUi {
      */
     public static void showTaskList() {
         int taskNum;
+        System.out.println(LINE_BREAK);
         System.out.println("Your current tasks: ");
         for(int i=0; i < TaskList.allTasks.size(); i++) {
             if (TaskList.allTasks.get(i) != null) {
@@ -102,6 +104,15 @@ public class TextUi {
     public static void showInvalidInputMessage() {
         System.out.println(LINE_BREAK);
         System.out.println("OOPS!!! I'm sorry, but I don't know what that means :-(");
+        System.out.println(LINE_BREAK);
+    }
+
+    public static void showMatchedTasks(ArrayList<Task> matchList) {
+        System.out.println(LINE_BREAK);
+        for (int i=0; i < matchList.size(); i++) {
+            int taskNum = i + 1;
+            System.out.println(taskNum + ". " + matchList.get(i).toString());
+        }
         System.out.println(LINE_BREAK);
     }
 
