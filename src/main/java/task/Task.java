@@ -5,11 +5,11 @@ package task;
  */
 public class Task {
 
-    protected boolean done;
+    protected boolean isDone;
     protected String task;
 
     public Task(String task) {
-        this.done = false;
+        this.isDone = false;
         this.task = task;
     }
 
@@ -25,7 +25,7 @@ public class Task {
      * Mark the task as done.
      */
     public void setDone() {
-        done = true;
+        isDone = true;
     }
 
     /**
@@ -33,7 +33,7 @@ public class Task {
      * @return String done status.
      */
     public String getDone() {
-        if (done) {
+        if (isDone) {
             return "[X]";
         } else {
             return "[ ]";

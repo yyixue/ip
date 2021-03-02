@@ -70,7 +70,7 @@ public class TextUi {
         int taskNum;
         System.out.println(LINE_BREAK);
         System.out.println("Your current tasks: ");
-        for(int i=0; i < TaskList.allTasks.size(); i++) {
+        for (int i=0; i < TaskList.allTasks.size(); i++) {
             if (TaskList.allTasks.get(i) != null) {
                 taskNum = i + 1;
                 System.out.println(taskNum + ". " + TaskList.allTasks.get(i).toString());

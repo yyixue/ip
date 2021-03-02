@@ -51,8 +51,8 @@ public class Parser {
                     createTodo(actionArr[1]);
                     taskNum = TaskList.allTasks.size();
                     storeTask(taskNum);
-                } catch (ParseException b){
-                    System.out.println(b);
+                } catch (ParseException p){
+                    System.out.println(p);
                     break;
                 }
                 break;
@@ -65,8 +65,8 @@ public class Parser {
                     createDeadline(actionArr[1]);
                     taskNum = TaskList.allTasks.size();
                     storeTask(taskNum);
-                } catch (ParseException c){
-                    System.out.println(c);
+                } catch (ParseException p){
+                    System.out.println(p);
                     break;
                 }
                 break;
@@ -79,8 +79,8 @@ public class Parser {
                     createEvent(actionArr[1]);
                     taskNum = TaskList.allTasks.size();
                     storeTask(taskNum);
-                } catch (ParseException e){
-                    System.out.println(e);
+                } catch (ParseException p){
+                    System.out.println(p);
                     break;
                 }
 
@@ -107,12 +107,12 @@ public class Parser {
                             taskNum = i + 1;
                             storeTask(taskNum);
                         }
-                    } catch (IllegalValueException k) {
-                        System.out.println(k);
+                    } catch (IllegalValueException e) {
+                        System.out.println(e);
                         break;
                     }
-                } catch (ParseException a){
-                    System.out.println(a);
+                } catch (ParseException p){
+                    System.out.println(p);
                     break;
                 }
                 break;
@@ -134,12 +134,12 @@ public class Parser {
                             taskNum = i + 1;
                             storeTask(taskNum);
                         }
-                    } catch (IllegalValueException k) {
-                        System.out.println(k);
+                    } catch (IllegalValueException e) {
+                        System.out.println(e);
                         break;
                     }
-                } catch (ParseException a){
-                    System.out.println(a);
+                } catch (ParseException p){
+                    System.out.println(p);
                     break;
                 }
                 break;
@@ -173,8 +173,8 @@ public class Parser {
             Deadline d = new Deadline(deadlineParts[0], deadlineParts[1]);
             TaskList.allTasks.add(d);
             TextUi.taskAddedMessage(d);
-        } catch (ParseException d){
-            System.out.println(d);
+        } catch (ParseException p){
+            System.out.println(p);
         }
     }
 
@@ -187,8 +187,8 @@ public class Parser {
             Event e = new Event(eventParts[0], eventParts[1]);
             TaskList.allTasks.add(e);
             TextUi.taskAddedMessage(e);
-        } catch (ParseException z){
-            System.out.println(z);
+        } catch (ParseException p){
+            System.out.println(p);
         }
     }
 
@@ -197,14 +197,14 @@ public class Parser {
         if (taskNum==1) {
             try {
                 Storage.writeToFile(taskNum + ". " + TaskList.allTasks.get(0).toString() + "\n");
-            } catch (IOException e) {
-                System.out.println("Something went wrong: " + e.getMessage());
+            } catch (IOException a) {
+                System.out.println("Something went wrong: " + a.getMessage());
             }
         } else {
             try {
                 Storage.appendToFile(taskNum + ". " + TaskList.allTasks.get(taskNum-1).toString() + "\n");
-            } catch (IOException e) {
-                System.out.println("Something went wrong: " + e.getMessage());
+            } catch (IOException a) {
+                System.out.println("Something went wrong: " + a.getMessage());
             }
         }
     }
