@@ -101,6 +101,7 @@ Exits the Program.
 Format: <mark style="background-color: lightblue"> bye </mark>
 
 # Command Summary
+
 | Action   | Format/ Examples                                                                                                                             |
 |----------|----------------------------------------------------------------------------------------------------------------------------------------------|
 | todo     | todo d/DESCRIPTION e.g. todo d/Return library book                                                                                           |
